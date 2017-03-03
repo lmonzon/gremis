@@ -1,9 +1,9 @@
 import express from 'express'
 const router = express.Router()
 
-import {Client, Person ,Chofer} from 'src/server/models'
+import {Client, Person ,Chofer ,Coche} from 'src/server/models'
 
-// GET  /api/votes
+// GET  /client
 router.get('/client', (req, res) => {
   Client.find({}).populate("_person").exec((err,docs) => {
     if (err) {
@@ -40,16 +40,8 @@ router.post('/client', (req, res) => {
     }
 
 
-   let person = new Person()
-   person.nombre = req.body.nombre
-   person.apellido=req.body.apellido
-   person.tipoDoc=req.body.tipoDoc
-   person.numeroDoc=req.body.numeroDoc
-   person.celular=req.body.celular
-   person.telefono=req.body.telefono
-   person.calle=req.body.calle
-   person.numeroPuerta=req.body.numeroPuerta
-   person.save(onSave(person))
+   let person = createPerson(req);
+    person.save(onSave(person))
 
 
 })
@@ -72,18 +64,98 @@ router.post('/chofer', (req, res) => {
     }
 
 
-   let person = new Person()
-   person.nombre = req.body.nombre
-   person.apellido=req.body.apellido
-   person.tipoDoc=req.body.tipoDoc
-   person.numeroDoc=req.body.numeroDoc
-   person.celular=req.body.celular
-   person.telefono=req.body.telefono
-   person.calle=req.body.calle
-   person.numeroPuerta=req.body.numeroPuerta
-   person.save(onSave(person,req.body.nroLinc))
+ let person = createPerson(req)
+ onSave(person,req.body.nroLinc)
+
 
 
 })
+
+router.get('/chofer', (req, res) => {
+  Chofer.find({}).populate("_person").exec((err,docs) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+    res.json(docs)
+  })
+})
+
+router.get('/chofer/:id_chofer', (req, res) => {
+  Chofer.findById(req.params.id_chofer).populate("_person").exec((err,docs) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+    res.json(docs)
+  })
+})
+
+router.get('/chofer/:nro_linc', (req, res) => {
+  Client.find({'codigo':req.params.codigo_client}).populate("_person").exec((err,docs) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+    res.json(docs)
+  })
+})
+
+
+router.post('/coche', (req, res) => {
+
+    var onSave = function (coche) {
+      return function (err) {
+        if (err) {
+          return res.sendStatus(500).json(err)
+        }
+
+        //Client.populate(client,{path:"_person"},(err,client)=>res.json(client))
+        Coche.populate(coche,{path:"titular"},(err,coche)=>res.json(coche));
+      }
+    }
+
+  let coche = new Coche({
+       marca      : req.body.marca,
+       patente    : req.body.patente,
+       modelo     : req.body.modelo,
+       year       : req.body.year,
+       vencVtv    : req.body.vencVtv,
+       combustible: req.body.combustible,
+       titular    : req.body.id_person
+
+  })
+
+
+ coche.save(onSave(coche))
+
+
+
+})
+
+router.get('/coche', (req, res) => {
+
+  Coche.find({}).populate("titular").exec((err,docs) => {
+    if (err) {
+      return res.sendStatus(500).json(err)
+    }
+    res.json(docs)
+  })
+
+
+})
+
+
+
+
+let createPerson = (req)=>{
+  let person = new Person()
+  person.nombre = req.body.nombre
+  person.apellido=req.body.apellido
+  person.tipoDoc=req.body.tipoDoc
+  person.numeroDoc=req.body.numeroDoc
+  person.celular=req.body.celular
+  person.telefono=req.body.telefono
+  person.calle=req.body.calle
+  person.numeroPuerta=req.body.numeroPuerta
+  return person;
+}
 
 export default router

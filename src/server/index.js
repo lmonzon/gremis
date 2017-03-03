@@ -8,6 +8,12 @@ mongoose.connect('mongodb://localhost:27017/gremis')
 
 app.use(bodyParser.urlencoded({ extended: true })); //recibe parametros por url
 app.use(bodyParser.json()); //recibe parametros por json
+app.use((req,res,next)=>{
+	res.header("Access-Control-Allow-Origin","*");
+	res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+	next();
+}); //recibe parametros por url
+
 app.use(express.static('public'))
 app.use('/api', api);
 

@@ -62,6 +62,31 @@ let ChoferSchema = new mongoose.Schema({
 
 })
 
+let CocheSchema = new mongoose.Schema({
+    marca  : String,
+    modelo : String,
+    year   : Number,
+    titular:{type: mongoose.Schema.Types.ObjectId, ref: 'Person'},
+    vencVtv: Date,
+    combustible:Number
+
+})
+
+let ViajeSchema = new mongoose.Schema({
+  _chofer       :{type: mongoose.Schema.Types.ObjectId, ref: 'Chofer'},
+  _coche        :{type: mongoose.Schema.Types.ObjectId, ref: 'Coche'},
+  fecha         : Number,
+  desde         : String,
+  hasta         : String,
+  kms           : Number,
+  precio        : Number,
+  estado        : Number
+})
+
+
+
 export var Person =mongoose.model('Person', PersonSchema)
 export var Client =mongoose.model('Client', ClientSchema)
 export var Chofer =mongoose.model('Chofer', ChoferSchema)
+export var Coche  =mongoose.model('Coche', CocheSchema)
+export var Viaje  =mongoose.model('Viaje', ViajeSchema)
