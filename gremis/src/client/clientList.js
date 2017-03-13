@@ -12,11 +12,14 @@ class ClientList extends Component {
     <ul>
 
       {this.props.listado.map(cliente => {
-        return <li>{cliente._person.nombre} , {cliente._person.apellido},{cliente.codigo}</li>
+        return <li> a {cliente._person.nombre} , {cliente._person.apellido},{cliente.codigo}</li>
     }
     )
   }
     </ul>
+
+
+  
   )
   }
 }

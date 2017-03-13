@@ -30,8 +30,24 @@ class ClientForm extends Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.nombre);
     event.preventDefault();
+    console.log(JSON.stringify(this.state));
+    self = this;
+    fetch("http://localhost:3000/api/client",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: "POST",
+        body: JSON.stringify(this.state),
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        self.props.addClient(data);
+      })
+      .catch(err => console.log(err))
+
   }
 
 

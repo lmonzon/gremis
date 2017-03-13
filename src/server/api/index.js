@@ -24,7 +24,7 @@ router.get('/client/:codigo_client', (req, res) => {
 
 // POST /api/vote/123
 router.post('/client', (req, res) => {
-
+    console.log(req,res);
     var onSave = function (person) {
       return function (err) {
         if (err) {
@@ -148,6 +148,7 @@ router.get('/coche', (req, res) => {
 let createPerson = (req)=>{
   let person = new Person()
   person.nombre = req.body.nombre
+  console.log(req)
   person.apellido=req.body.apellido
   person.tipoDoc=req.body.tipoDoc
   person.numeroDoc=req.body.numeroDoc
