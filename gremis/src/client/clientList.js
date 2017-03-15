@@ -1,26 +1,43 @@
 import React, { Component } from 'react';
+import { Table } from 'react-materialize';
+
 import './clientList.css';
 
 class ClientList extends Component {
-  constructor(){
+  constructor() {
     super()
-    this.state={}
+    this.state = {}
   }
 
   render() {
     return (
-    <ul>
+      <Table>
+        <thead>
+          <tr>
+            <th data-field="nombre">Nombre</th>
+            <th data-field="apellido">Apellido</th>
+            <th data-field="codigo">Codigo</th>
+          </tr>
+        </thead>
+        <tbody>
 
-      {this.props.listado.map(cliente => {
-        return <li> a {cliente._person.nombre} , {cliente._person.apellido},{cliente.codigo}</li>
-    }
+          {this.props.listado.map(cliente => {
+            return(
+           <tr>
+              <td> {cliente._person.nombre}</td>
+              <td>{cliente._person.apellido}</td>
+              <td>{cliente.codigo}</td>
+            </tr>
+            )
+          }
+          )
+          }
+        </tbody>
+      </Table>
+
+
+
     )
-  }
-    </ul>
-
-
-  
-  )
   }
 }
 

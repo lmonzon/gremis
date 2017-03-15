@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Input, Icon, Button, Col } from 'react-materialize';
+import {Modal, Row, Input, Icon, Button, Col } from 'react-materialize';
 class ClientForm extends Component {
   constructor(props) {
     super(props);
@@ -56,15 +56,18 @@ class ClientForm extends Component {
     return (
 
 
+<Modal
+  header='Alta Cliente'
+  trigger={
+    <Button  floating large icon='add' waves='light'></Button>
+  }>
       <Row>
         <Col s={12}>
-
-          <h5>Alta Cliente</h5>
           <form onSubmit={this.handleSubmit}>
             <Row>
 
               <Input
-                s={3}
+                s={6}
                 name="tipoDoc"
                 onChange={this.handleInputChange}
                 type='select'
@@ -79,7 +82,7 @@ class ClientForm extends Component {
               <Input
                 name="numeroDoc"
                 value={this.state.numeroDoc}
-                s={3}
+                s={6}
                 onChange={this.handleInputChange}
                 label="Numero Documento"
               >
@@ -90,14 +93,14 @@ class ClientForm extends Component {
                 name="nombre"
                 onChange={this.handleInputChange}
                 value={this.state.nombre}
-                s={3}
+                s={6}
                 label="Nombre">
               </Input>
 
               <Input
                 name="apellido"
                 value={this.state.apellido}
-                s={3}
+                s={6}
                 onChange={this.handleInputChange}
                 label="Apellido" />
             </Row>
@@ -106,7 +109,7 @@ class ClientForm extends Component {
                 name="celular"
                 onChange={this.handleInputChange}
                 value={this.state.celular}
-                s={3}
+                s={6}
                 validate
 
                 type="tel"
@@ -116,7 +119,7 @@ class ClientForm extends Component {
               <Input
                 name="telefono"
                 value={this.state.telefono}
-                s={3}
+                s={6}
                 onChange={this.handleInputChange}
                 label="Telefono" />
             </Row>
@@ -125,14 +128,14 @@ class ClientForm extends Component {
                 name="calle"
                 onChange={this.handleInputChange}
                 value={this.state.calle}
-                s={3}
+                s={6}
                 label="Calle">
               </Input>
 
               <Input
                 name="numeroPuerta"
                 value={this.state.numeroPuerta}
-                s={3}
+                s={6}
                 onChange={this.handleInputChange}
                 label="Numero" />
             </Row>
@@ -141,6 +144,8 @@ class ClientForm extends Component {
           </form>
         </Col>
       </Row>
+  </Modal>
+
     );
   }
 }
